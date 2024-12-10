@@ -39,6 +39,7 @@ class Data {
   String? price;
   String? adminPrice;
   String? packagingCharges;
+  int? restaurent_id;
   int? discount;
   String? vote;
   int? customizeSpice;
@@ -58,8 +59,9 @@ class Data {
     this.description,
     this.price,
     this.adminPrice,
-    this.packagingCharges,
     this.discount,
+    this.packagingCharges,
+    this.restaurent_id,
     this.vote,
     this.customizeSpice,
     this.freeDelivery,
@@ -83,6 +85,7 @@ class Data {
     discount = json['discount'];
     vote = json['vote'];
     customizeSpice = json['customize_spice'];
+    restaurent_id = json['restaurent_id'];
     freeDelivery = json['free_delivery'];
     bestSeller = json['best_seller'];
     recommended = json['recommended'];
@@ -100,6 +103,7 @@ class Data {
     data['time'] = this.time;
     data['description'] = this.description;
     data['price'] = this.price;
+    data['restaurent_id'] = this.restaurent_id;
     data['admin_price'] = this.adminPrice;
     data['packaging_charges'] = this.packagingCharges;
     data['discount'] = this.discount;

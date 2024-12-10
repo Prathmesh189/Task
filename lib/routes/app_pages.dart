@@ -3,8 +3,8 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import '../bindings/dashboard_binding.dart';
+import '../screens/cart_screen.dart';
 import '../screens/dashboard_screen.dart';
-import '../screens/spash_screen.dart';
 
 class AppPages {
   AppPages._();
@@ -15,13 +15,14 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: Routes.SPLASH_SCREEN,
-      page: () => const SplashScreen(),
+      name: Routes.DASHBOARD_SCREEN,
+      page: () => DashboardScreen(),
+      binding: DashboardBinding(),
       transition: transition,
     ),
     GetPage(
-      name: Routes.DASHBOARD_SCREEN,
-      page: () => DashboardScreen(),
+      name: Routes.CART_SCREEN,
+      page: () => CartScreen(),
       binding: DashboardBinding(),
       transition: transition,
     ),

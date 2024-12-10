@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_p/utils/config.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import '../controllers/app_controller.dart';
 import '../controllers/dashboard_controller.dart';
+import '../routes/routes.dart';
 import '../utils/text_styles.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -57,6 +59,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Expanded(child: _recommendeList(context)),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.toNamed(Routes.CART_SCREEN);
+
+          print("Floating Action Button Pressed");
+        },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        child: Icon(Icons.add_shopping_cart_sharp, color: Colors.white),
+      ),
     );
   }
 
@@ -92,6 +103,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
         itemBuilder: (context, index) {
           final item = controller.recommendations[index];
+
           return Card(
             margin: EdgeInsets.only(bottom: 2.h),
             elevation: 4,
@@ -102,7 +114,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               leading: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.network(
-                  item.image!,
+                  "${Config.domainUrl}${item.coverImage!}",
                   width: 12.w,
                   height: 12.w,
                   fit: BoxFit.cover,
@@ -115,15 +127,42 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   fontSize: 14.sp,
                 ),
               ),
-              subtitle: Text(
-                'Price: ₹${item.price}',
-                style: TextStyle(fontSize: 12.sp),
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.add_shopping_cart),
-                onPressed: () {
-                  // Handle add to cart
-                },
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Price: ₹${item.price}',
+                    style: TextStyle(fontSize: 12.sp),
+                  ),
+                  SizedBox(height: 1.h),
+                  Row(
+                    children: [
+                      // Minus Button
+                      IconButton(
+                        icon: Icon(Icons.remove),
+                        onPressed: () {
+                          if (controller.quantity.value > 0) {
+                            controller.quantity.value--;
+                            controller.updateItemQuantity(restaurent_id: item.restaurent_id!, id: item.id!, type: "minis");
+                          }
+                        },
+                      ),
+                      // Quantity Display
+                      Obx(() => Text(
+                            '${controller.quantity.value}',
+                            style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                          )),
+                      // Add Button
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: () {
+                          controller.quantity.value++;
+                          controller.updateItemQuantity(restaurent_id: item.restaurent_id!, id: item.id!, type: "add");
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           );
