@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
+import '../controllers/app_controller.dart';
 import '../controllers/dashboard_controller.dart';
 import '../utils/text_styles.dart';
 
@@ -13,6 +14,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  // Define controllers first
+  final AppController authController = Get.put(AppController());
   final DashboardController controller = Get.put(DashboardController());
 
   @override
